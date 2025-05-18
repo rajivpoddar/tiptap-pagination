@@ -31,7 +31,8 @@ import {
   TableRowPlus,
 } from "tiptap-pagination-plus";
 import { Button } from "./button";
-import { editorContent } from "@/lib/editor-content";
+import { useEffect } from "react";
+
 const TiptapEditor = () => {
   const editor = useEditor({
     extensions: [
@@ -52,8 +53,7 @@ const TiptapEditor = () => {
         footerText: "Made with ❤️ by Romik",
       }),
     ],
-    // content: editorContentLong,
-    content: editorContent,
+    content: "<p>Loading transcript...</p>",
     editorProps: {
       attributes: {
         class:
@@ -64,6 +64,27 @@ const TiptapEditor = () => {
       console.log(editor.getJSON());
     },
   });
+
+  useEffect(() => {
+    if (editor) {
+      fetch('/transcript.txt')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(text => {
+          const lines = text.split('\n');
+          const htmlContent = lines.map(line => `<p>${line}</p>`).join('');
+          editor.commands.setContent(htmlContent);
+        })
+        .catch(error => {
+          console.error("Failed to fetch transcript:", error);
+          editor.commands.setContent("<p>Error loading transcript.</p>");
+        });
+    }
+  }, [editor]);
 
   if (!editor) {
     return null;
