@@ -2,7 +2,7 @@ import TiptapEditor from "@/ui/tiptap-editor";
 
 function Home() {
   return (
-    <div className="max-w-4xl mx-auto px-2 relative">
+    <div className="min-h-screen bg-gray-100 py-8">
       <TiptapEditor />
     </div>
   );
