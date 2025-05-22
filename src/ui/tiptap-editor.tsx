@@ -85,6 +85,12 @@ const TiptapEditor = () => {
 
   const showEditor = initialContent !== null && !!editor && isEditorCoreInitialized && isPaginationPluginReady;
 
+  useEffect(() => {
+    if (showEditor && editor) {
+      editor.commands.focus();
+    }
+  }, [showEditor, editor]);
+
   return (
     <div 
       className="bg-white shadow-lg rounded-md max-w-3xl mx-auto min-h-[calc(100vh-4rem)] relative"
