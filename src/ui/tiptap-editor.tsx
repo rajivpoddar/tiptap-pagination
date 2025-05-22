@@ -5,7 +5,6 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
 import {
   PaginationPlus,
   TableCellPlus,
@@ -26,7 +25,6 @@ const TiptapEditor = () => {
       TableRowPlus,
       TableCellPlus,
       TableHeaderPlus,
-      ListItem,
       PaginationPlus.configure({
         pageHeight: 842,
         pageGap: 20,
