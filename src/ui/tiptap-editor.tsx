@@ -5,37 +5,34 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
 import {
   PaginationPlus,
-  TableCellPlus,
-  TableHeaderPlus,
-  TablePlus,
-  TableRowPlus,
+  // TableCellPlus,
+  // TableHeaderPlus,
+  // TablePlus,
+  // TableRowPlus,
 } from "tiptap-pagination-plus";
 import { useEffect } from "react";
 
+// Define extensions outside the component for stability
+const editorExtensions = [
+  StarterKit,
+  Underline,
+  TextStyle,
+  Color,
+  PaginationPlus.configure({
+    pageHeight: 842,
+    pageGap: 20,
+    pageBreakBackground: "hsl(var(--background))",
+    pageHeaderHeight: 50,
+    footerText: "Page",
+    headerText: "transcript.txt"
+  }),
+];
+
 const TiptapEditor = () => {
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      TextStyle,
-      Color,
-      TablePlus,
-      TableRowPlus,
-      TableCellPlus,
-      TableHeaderPlus,
-      ListItem,
-      PaginationPlus.configure({
-        pageHeight: 842,
-        pageGap: 20,
-        pageBreakBackground: "hsl(var(--background))",
-        pageHeaderHeight: 50,
-        footerText: "Page",
-        headerText: "transcript.txt"
-      }),
-    ],
+    extensions: editorExtensions,
     content: "<p>Loading transcript...</p>",
     editorProps: {
       attributes: {
