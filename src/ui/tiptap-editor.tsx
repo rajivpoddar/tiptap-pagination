@@ -6,7 +6,7 @@ import Underline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import { PaginationPlus } from "tiptap-pagination-plus";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Extension } from "@tiptap/core";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { DOMParser } from "@tiptap/pm/model";
@@ -84,11 +84,7 @@ const PasteHandler = Extension.create({
 const TiptapEditor = () => {
   const [initialContent, setInitialContent] = useState<string | null>(null);
   const [isEditorCoreInitialized, setIsEditorCoreInitialized] = useState(false);
-  const [isPaginationPluginReady, setIsPaginationPluginReady] = useState(false);
-
-  const handlePaginationPluginReady = useCallback(() => {
-    setIsPaginationPluginReady(true);
-  }, []);
+  const [isPaginationPluginReady] = useState(true);
 
 
   const editorExtensions = useMemo(() => {
@@ -105,10 +101,9 @@ const TiptapEditor = () => {
         pageHeaderHeight: 50,
         footerText: "Page",
         headerText: "transcript.txt",
-        onReady: handlePaginationPluginReady,
       }),
     ];
-  }, [handlePaginationPluginReady]);
+  }, []);
 
   useEffect(() => {
     fetch('/transcript.txt')
@@ -141,6 +136,7 @@ const TiptapEditor = () => {
 
   useEffect(() => {
     if (editor && initialContent) {
+      console.log('Editor and content ready, setting core initialized');
       const timer = setTimeout(() => {
         setIsEditorCoreInitialized(true);
       }, 50);
@@ -150,7 +146,6 @@ const TiptapEditor = () => {
       };
     } else {
       setIsEditorCoreInitialized(false);
-      setIsPaginationPluginReady(false);
     }
   }, [editor, initialContent]);
 
