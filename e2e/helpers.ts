@@ -121,7 +121,7 @@ export async function waitForPageCountStable(page: Page, expectedMinimum?: numbe
     }
     
     previousCount = currentCount;
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
   }
   
   return previousCount;
